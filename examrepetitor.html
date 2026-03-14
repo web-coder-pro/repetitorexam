@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Test</title>
+  <link rel="icon" type="image/png" href="we.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="website icon" type="jpg" href="pro.jpg">
+
+  <style>
+
+    body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: linear-gradient(135deg,#0f0f0f,#1a0000);
+  color: white;
+}
+
+/* CONTAINER */
+.test-box {
+  width: 95%;
+  max-width: 900px;
+  margin: 30px auto;
+}
+
+.test-box h1 {
+  color: blue;
+}
+
+/* HAR SAVOL CARD */
+.savol {
+  background: #111;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255,0,0,0.4);
+  transition: 0.3s;
+}
+
+.savol p {
+  font-size: 20px;
+}
+
+/* VARIANT FULL WIDTH */
+.variant {
+  display: block;
+  width: 96%;
+  padding: 14px;
+  margin: 8px 0;
+  background: #1a1a1a;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.variant:hover {
+  background: #ff0000;
+  color: white;
+}
+
+.variant input {
+  margin-right: 10px;
+}
+
+/* BUTTON */
+.btn-check {
+  width: 250px;
+  padding: 12px;
+  font-size: 16px;
+  background: linear-gradient(90deg,#ff0000,#990000);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  margin: 30px auto;
+  display: block;
+  transition: 0.3s;
+}
+
+.btn-check:hover {
+  transform: scale(1.05);
+}
+
+/* FOOTER */
+.footer {
+  background: #000;
+  text-align: center;
+  padding: 30px;
+  margin-top: 50px;
+}
+
+/* RESULT MODAL */
+#resultModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.result-box {
+  background: #111;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 20px red;
+}
+
+/* GRAPH BAR */
+.progress-container {
+  background: #222;
+  border-radius: 30px;
+  overflow: hidden;
+  height: 25px;
+  margin: 15px 0;
+}
+
+.progress-bar {
+  height: 100%;
+  text-align: center;
+  line-height: 25px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.correct-bar {
+  background: linear-gradient(90deg,#00ff88,#00aa44);
+}
+
+.incorrect-bar {
+  background: linear-gradient(90deg,#ff0000,#990000);
+}
+
+.btn-back {
+  width: 200px;
+  padding: 12px;
+  font-size: 16px;
+  background: linear-gradient(90deg,#ff0000,#990000);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  margin: 30px auto;
+  display: block;
+  transition: 0.3s;
+}
+
+.btn-back:hover {
+  transform: scale(1.1);
+}
+
+.feed-style {
+  color: grey;
+  font-size: 17px;
+  text-decoration: none;
+}
+
+.feed-style:hover {
+  text-decoration: underline;
+}
+
+@media(max-width:600px){
+  .savol p {
+    font-size: 16px;
+  }
+
+  .btn-check {
+    width: 90%;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="test-box" id="testContainer">
+    <h2>Repetitor testlari - 🧾</span></h2>
+  </div>
+
+  <div>
+    <button class="btn-check">TEKSHIRISH</button>
+  </div>
+
+  <footer class="footer">
+    <h1>WebEditor || Barcha huquqlar himoyalangan </h1>
+  </footer>
+
+  <script>
+    const testContainer = document.getElementById("testContainer");
+    const selectedTestsJSON = localStorage.getItem('selectedTests');
+
+    if (!selectedTestsJSON) {
+      testContainer.innerHTML += "<p>Hech qanday test topilmadi.</p>";
+    } else {
+      const selectedTests = JSON.parse(selectedTestsJSON);
+      selectedTests.forEach((test, index) => {
+        const savolDiv = document.createElement("div");
+        savolDiv.classList.add("savol");
+
+        const savolText = document.createElement("p");
+        savolText.innerHTML = `<hr> <b>${index + 1}. ${test.savol}</b>`;
+        savolDiv.appendChild(savolText);
+
+        test.variantlar.forEach(variant => {
+          const label = document.createElement("label");
+          label.classList.add("variant");
+          label.innerHTML = `<input type="radio" name="savol${index}" value="${variant}"> ${variant}`;
+          savolDiv.appendChild(label);
+        });
+
+        testContainer.appendChild(savolDiv);
+      });
+    }
+  </script>
+
+  <script>
+    const checkBtn = document.querySelector('.btn-check');
+
+checkBtn.addEventListener('click', () => {
+  const selectedTestsJSON = localStorage.getItem('selectedTests');
+  if (!selectedTestsJSON) {
+    alert('Hech qanday test topilmadi!');
+    return;
+  }
+
+  const selectedTests = JSON.parse(selectedTestsJSON);
+  let correctCount = 0;
+  let incorrectCount = 0;
+
+  for (let i = 0; i < selectedTests.length; i++) {
+    const radios = document.getElementsByName(`savol${i}`);
+    let userAnswer = null;
+
+    for (const radio of radios) {
+      if (radio.checked) {
+        userAnswer = radio.value;
+        break;
+      }
+    }
+
+    const correctAnswer = selectedTests[i].javob || selectedTests[i].answer;
+    const savolDiv = radios[0]?.closest('.savol');
+
+    if (userAnswer === correctAnswer) {
+      savolDiv.style.border = "2px solid #00ff88";
+      correctCount++;
+    } else {
+      savolDiv.style.border = "2px solid red";
+      incorrectCount++;
+    }
+  }
+
+  const total = correctCount + incorrectCount;
+  const correctPercent = Math.round((correctCount / total) * 100);
+  const incorrectPercent = 100 - correctPercent;
+
+  const modal = document.createElement("div");
+  modal.id = "resultModal";
+
+  modal.innerHTML = `
+    <div class="result-box">
+      <h2>📊 Test Natijasi</h2>
+      <hr>
+      <p>✅ To'g'ri: <b>${correctCount}</b></p>
+      <p>❌ Xato: <b>${incorrectCount}</b></p>
+
+      <div class="progress-container">
+        <div class="progress-bar correct-bar" style="width:${correctPercent}%">
+          ${correctPercent}%
+        </div>
+      </div>
+
+      <button onclick="window.location.href='repetitor_exam.html'" class="btn-back">
+        Boshqa testlar
+      </button>
+
+      <a href="feed.html" class="feed-style">Feedback</a>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  checkBtn.disabled = true;
+});
+  </script>
+
+</body>
+</html>

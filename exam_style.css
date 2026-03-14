@@ -1,0 +1,135 @@
+/* --- Umumiy body --- */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	background: linear-gradient(135deg, #0d0d0d, #330000);
+	text-align: center;
+}
+    h2 {
+      margin-top: 20px;
+      color: whitesmoke;
+    }
+
+    .test-box {
+      background: darkred;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      padding: 20px;
+      max-width: 700px;
+      width: 90%;
+      margin-top: 30px;
+    }
+
+    .savol {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .savol p {
+      font-size: 22px;
+      color: whitesmoke;
+    }
+
+    .variant {
+      display: block;
+      margin: 8px 0;
+      padding: 10px 15px;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .variant:hover {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+    .variant:active {
+      background-color: #007bff; 
+    }
+
+    .variant input {
+      margin-right: 10px;
+    }
+
+    .btn-check {
+      width: 200px;
+      padding: 10px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 20px 0;
+      transition: 0.3s ease;
+    }
+
+    .btn-check:hover {
+      background-color: #218838;
+    }
+
+    .footer {
+      background-color: #222;
+      color: white;
+      padding: 30px 10px;
+      margin-top: 50px;
+    }
+
+    .footer ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 auto;
+      max-width: 110px;
+      text-align: left;
+    }
+
+    .footer li {
+      margin-bottom: 10px;
+    }
+
+    .footer a {
+      color: #ddd;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    #result {
+      margin-top: 20px;
+    }
+
+    .h2-pro {
+      color: blue;
+    }
+
+    .a-one {
+      color: white;
+      font-size: 20px;
+      margin: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .test-box {
+        width: 95%;
+        padding: 15px;
+      }
+
+      .variant {
+        font-size: 16px;
+      }
+
+      .btn-check {
+        width: 90%;
+      }
+
+      .footer h1 {
+        font-size: 20px;
+      }
+    }
